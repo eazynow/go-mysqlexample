@@ -13,3 +13,6 @@ then just run with
     go run mysqlexample.go
 
 It expects a mysql server at 176.16.200.100 (vagrant db0) with voice database
+
+TODO:
+* Add example of using transactions, commits, rollbacks
