@@ -6,11 +6,11 @@ import (
 	_ "mysql"
 )
 
-type TelephonyProfile struct {
-	id                string
-	companyName       string
-	currentPackage_id string
-	email             string
+type User struct {
+	id    string
+	name  string
+	age   int
+	email string
 }
 
 func main() {
@@ -34,13 +34,13 @@ func main() {
 	allRowsAsVariables(db)
 	allRowsAsStruct(db)
 
-	singleRowById(db, "12345678-EROL-AAAA-AAAA-123456789012")
+	singleRowById(db, "USER0001")
 
 }
 
 func allRowsAsVariables(db *sql.DB) {
 	fmt.Println("All rows loaded into variables")
-	rows, err := db.Query("select id, email from telephony_profile")
+	rows, err := db.Query("select id, email from users")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -59,7 +59,7 @@ func allRowsAsVariables(db *sql.DB) {
 
 func allRowsAsStruct(db *sql.DB) {
 	fmt.Println("All rows loaded into a struct")
-	rows, err := db.Query("select id, companyName, currentPackage_id, email from telephony_profile")
+	rows, err := db.Query("select id, name, age, email from users")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -68,27 +68,27 @@ func allRowsAsStruct(db *sql.DB) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var profile TelephonyProfile
-		rows.Scan(&profile.id, &profile.companyName, &profile.currentPackage_id, &profile.email)
-		fmt.Println(profile)
+		var user User
+		rows.Scan(&user.id, &user.name, &user.age, &user.email)
+		fmt.Println(user)
 	}
 	rows.Close()
 }
 
-func singleRowById(db *sql.DB, profileId string) {
+func singleRowById(db *sql.DB, id string) {
 	fmt.Println("Single row by id")
-	stmt, err := db.Prepare("select id, companyName, currentPackage_id, email from telephony_profile where id=?")
+	stmt, err := db.Prepare("select id, name, age, email from users where id=?")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	var profile TelephonyProfile
-	err = stmt.QueryRow(profileId).Scan(&profile.id, &profile.companyName, &profile.currentPackage_id, &profile.email)
+	var user User
+	err = stmt.QueryRow(id).Scan(&user.id, &user.name, &user.name, &user.email)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(profile)
+	fmt.Println(user)
 
 }
