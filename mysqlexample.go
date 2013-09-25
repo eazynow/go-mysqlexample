@@ -1,3 +1,5 @@
+// Package main is an example of how to connect to a mysql database
+// using golang, and a few different examples of reading data
 package main
 
 import (
