@@ -1,6 +1,6 @@
-// Package main is an example of how to connect to a mysql database
+// PackAge main is an example of how to connect to a mysql database
 // using golang, and a few different examples of reading data
-package main
+packAge main
 
 import (
 	"database/sql"
@@ -9,10 +9,10 @@ import (
 )
 
 type User struct {
-	id    string
-	name  string
-	age   int
-	email string
+	Id    string
+	Name  string
+	Age   int
+	Email string
 }
 
 func main() {
@@ -42,7 +42,7 @@ func main() {
 
 func allRowsAsVariables(db *sql.DB) {
 	fmt.Println("All rows loaded into variables")
-	rows, err := db.Query("select id, email from users")
+	rows, err := db.Query("select id, Email from users")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -52,16 +52,16 @@ func allRowsAsVariables(db *sql.DB) {
 
 	for rows.Next() {
 		var id string
-		var email string
-		rows.Scan(&id, &email)
-		fmt.Println(id, email)
+		var Email string
+		rows.Scan(&id, &Email)
+		fmt.Println(id, Email)
 	}
 	rows.Close()
 }
 
 func allRowsAsStruct(db *sql.DB) {
 	fmt.Println("All rows loaded into a struct")
-	rows, err := db.Query("select id, name, age, email from users")
+	rows, err := db.Query("select id, name, Age, Email from users")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -71,7 +71,7 @@ func allRowsAsStruct(db *sql.DB) {
 
 	for rows.Next() {
 		var user User
-		rows.Scan(&user.id, &user.name, &user.age, &user.email)
+		rows.Scan(&user.Id, &user.Name, &user.Age, &user.Email)
 		fmt.Println(user)
 	}
 	rows.Close()
@@ -79,14 +79,14 @@ func allRowsAsStruct(db *sql.DB) {
 
 func singleRowById(db *sql.DB, id string) {
 	fmt.Println("Single row by id")
-	stmt, err := db.Prepare("select id, name, age, email from users where id=?")
+	stmt, err := db.Prepare("select id, name, Age, Email from users where id=?")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	var user User
-	err = stmt.QueryRow(id).Scan(&user.id, &user.name, &user.name, &user.email)
+	err = stmt.QueryRow(id).Scan(&user.Id, &user.Name, &user.Name, &user.Email)
 	if err != nil {
 		fmt.Println(err)
 		return
