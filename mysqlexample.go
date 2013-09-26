@@ -1,6 +1,6 @@
 // PackAge main is an example of how to connect to a mysql database
 // using golang, and a few different examples of reading data
-packAge main
+package main
 
 import (
 	"database/sql"
@@ -13,6 +13,12 @@ type User struct {
 	Name  string
 	Age   int
 	Email string
+}
+
+// String representation of the user
+func (u User) String() (s string) {
+	s := fmt.Sprintf("User id=%s, Name=%s, Age=%s, Email=%s", u.Id, u.Name, u.Age, u.Email)
+	return
 }
 
 func main() {
