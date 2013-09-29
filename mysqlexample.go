@@ -46,6 +46,9 @@ func main() {
 
 }
 
+// allRowsAsVariables just reads data from the users table and stored the fields
+// in local variables. Useful for ad hoc queries where you may not have a struct
+// defined for the response
 func allRowsAsVariables(db *sql.DB) {
 	fmt.Println("All rows loaded into variables")
 	rows, err := db.Query("select id, Email from users")
@@ -65,6 +68,9 @@ func allRowsAsVariables(db *sql.DB) {
 	rows.Close()
 }
 
+// allRowsAsStruct returns reads the data from the users table and loads each
+// row into a struct. This is the more likely way to get back data as you have
+// defined the structure in advance
 func allRowsAsStruct(db *sql.DB) {
 	fmt.Println("All rows loaded into a struct")
 	rows, err := db.Query("select id, name, Age, Email from users")
@@ -83,6 +89,8 @@ func allRowsAsStruct(db *sql.DB) {
 	rows.Close()
 }
 
+// singleRowById shows an example of looking up a row. It uses parameters to avoid
+// sql injection, and loads the response into a struct
 func singleRowById(db *sql.DB, id string) {
 	fmt.Println("Single row by id")
 	stmt, err := db.Prepare("select id, name, Age, Email from users where id=?")
